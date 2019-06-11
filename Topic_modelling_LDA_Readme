@@ -1,0 +1,58 @@
+Text Classification
+
+I give you a bunch of documents, each of which has a label attached. I ask you to learn why you think the contents of the documents have been
+given these labels based on their words. Then I give you new documents and ask what you think the label for each one should be. The labels
+have meaning to me, not to you necessarily.
+
+Topic Modeling
+
+I give you a bunch of documents, without labels. I ask you to explain why the documents have the words they do by identifying some topics that
+each is "about". You tell me the topics, by telling me how much of each is in each document, and I decide what the topics "mean" if anything.
+
+Text classification often involves mutually-exclusive classes -- think of these as buckets.
+But it doesn't have to: given the right kind of labeled input data, you can set of a series of non-mutually-exclusive binary classifiers.
+
+Topic modeling is generally not mutually-exclusive: the same document can have its probability distribution spread across many topics. In 
+addition, there are also hierarchical topic modeling methods.
+
+Topics can be defined as “a repeating pattern of co-occurring terms in a corpus”. A good topic model should result in – “health”, “doctor”, 
+“patient”, “hospital” for a topic – Healthcare, and “farm”, “crops”, “wheat” for a topic – “Farming”.
+
+Topic Models are very useful for the purpose for document clustering, organizing large blocks of textual data, information retrieval from 
+unstructured text and feature selection. For Example – New York Times are using topic models to boost their user – article recommendation 
+engines. Various professionals are using topic models for recruitment industries where they aim to extract latent features of job 
+descriptions and map them to right candidates. They are being used to organize large datasets of emails, customer reviews, and user social
+media profiles.
+
+Latent Dirichlet Allocation for Topic Modeling
+
+There are many approaches for obtaining topics from a text such as – Term Frequency and Inverse Document Frequency. NonNegative Matrix
+Factorization techniques. Latent Dirichlet Allocation is the most popular topic modeling technique and in this article, we will discuss the
+same.
+LDA assumes documents are produced from a mixture of topics. Those topics then generate words based on their probability distribution. Given a dataset of documents, LDA backtracks and tries to figure out what topics would create those documents in the first place.
+
+LDA is a matrix factorization technique. In vector space, any corpus (collection of documents) can be represented as a document-term matrix. The following matrix shows a corpus of N documents D1, D2, D3 … Dn and vocabulary size of M words W1,W2 .. Wn. The value of i,j cell gives the frequency count of word Wj in Document Di.
+
+LDA converts this Document-Term Matrix into two lower dimensional matrices – M1 and M2.
+M1 is a document-topics matrix and M2 is a topic – terms matrix with dimensions (N,  K) and (K, M) respectively, where N is the number of documents, K is the number of topics and M is the vocabulary size.
+
+Notice that these two matrices already provides topic word and document topic distributions, However, these distribution needs to be improved, which is the main aim of LDA. LDA makes use of sampling techniques in order to improve these matrices.
+
+It Iterates through each word “w” for each document “d” and tries to adjust the current topic – word assignment with a new assignment. A new topic “k” is assigned to word “w” with a probability P which is a product of two probabilities p1 and p2.
+
+For every topic, two probabilities p1 and p2 are calculated. P1 – p(topic t / document d) = the proportion of words in document d that are currently assigned to topic t. P2 – p(word w / topic t) = the proportion of assignments to topic t over all documents that come from this word w.
+
+The current topic – word assignment is updated with a new topic with the probability, product of p1 and p2 . In this step, the model assumes that all the existing word – topic assignments except the current word are correct. This is essentially the probability that topic t generated word w, so it makes sense to adjust the current word’s topic with new probability.
+
+After a number of iterations, a steady state is achieved where the document topic and topic term distributions are fairly good. This is the convergence point of LDA.
+
+ 
+
+Parameters of LDA
+Alpha and Beta Hyperparameters – alpha represents document-topic density and Beta represents topic-word density. Higher the value of alpha, documents are composed of more topics and lower the value of alpha, documents contain fewer topics. On the other hand, higher the beta, topics are composed of a large number of words in the corpus, and with the lower value of beta, they are composed of few words.
+
+Number of Topics – Number of topics to be extracted from the corpus. Researchers have developed approaches to obtain an optimal number of topics by using Kullback Leibler Divergence Score. I will not discuss this in detail, as it is too mathematical. For understanding, one can refer to this[1] original paper on the use of KL divergence.
+
+Number of Topic Terms – Number of terms composed in a single topic. It is generally decided according to the requirement. If the problem statement talks about extracting themes or concepts, it is recommended to choose a higher number, if problem statement talks about extracting features or terms, a low number is recommended.
+
+Number of Iterations / passes – Maximum number of iterations allowed to LDA algorithm for convergence.
